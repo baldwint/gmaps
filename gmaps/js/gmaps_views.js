@@ -47,7 +47,7 @@ var PinmapView = widget.DOMWidgetView.extend({
 
       var data = that._getData() ;
       var bounds = that._getBounds() ;
-      var labels = ["one", "two"];
+      var labels = that._getLabels() ;
 
       that.map = new google.maps.Map(
         that.$el[0],
@@ -60,11 +60,11 @@ var PinmapView = widget.DOMWidgetView.extend({
         var marker = new google.maps.Marker({
             position: latLng,
             map: that.map,
-            title: labels[m],
+            title: '',
             optimized: false
         });
         var infowindow = new google.maps.InfoWindow({
-            content: "hello world"
+            content: labels[m]
         });
         marker.addListener('click', function() {
             infowindow.open(that.map, marker);
@@ -107,6 +107,13 @@ var PinmapView = widget.DOMWidgetView.extend({
       this.model.set('_bounds', [
         this._latLng2Array(bounds.getSouthWest()),
         this._latLng2Array(bounds.getNorthEast()) ]) ;
+      },
+
+      _getLabels : function() {
+        /*
+        * Get the labels from the model.
+        */
+        return this.model.get('_labels') ;
       },
 
       _getData : function() {

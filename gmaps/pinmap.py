@@ -8,14 +8,18 @@ class PinmapWidget(widgets.DOMWidget):
     _view_name = Unicode("PinmapView", sync=True)
     _bounds = List(sync=True)
     _data = List(sync=True)
+    _labels = List(sync=True)
     height = gmaps_traitlets.CSSDimension(sync=True)
     width = gmaps_traitlets.CSSDimension(sync=True)
 
-    def __init__(self, data, height, width):
+    def __init__(self, data, labels, height, width):
         self._data = data
         self.height = height
         self.width = width
         self._bounds = self._calc_bounds()
+        if labels is None:
+            labels = [None,]*len(data)
+        self._labels = [str(e) for e in labels]
         super(widgets.DOMWidget, self).__init__()
 
     def _calc_bounds(self):
@@ -26,7 +30,7 @@ class PinmapWidget(widgets.DOMWidget):
         return [ (min_latitude, min_longitude), (max_latitude, max_longitude) ]
 
 
-def pinmap(data, height="400px", width="700px"):
+def pinmap(data, labels, height="400px", width="700px"):
     """
     Draw a map with pins for each map.
 
@@ -38,5 +42,5 @@ def pinmap(data, height="400px", width="700px"):
     except AttributeError:
         # Not a Numpy Array.
         pass
-    w = PinmapWidget(data, height, width)
+    w = PinmapWidget(data, labels, height, width)
     return w
