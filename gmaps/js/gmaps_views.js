@@ -47,6 +47,7 @@ var PinmapView = widget.DOMWidgetView.extend({
 
       var data = that._getData() ;
       var bounds = that._getBounds() ;
+      var labels = ["one", "two"];
 
       that.map = new google.maps.Map(
         that.$el[0],
@@ -59,8 +60,14 @@ var PinmapView = widget.DOMWidgetView.extend({
         var marker = new google.maps.Marker({
             position: latLng,
             map: that.map,
-            title: '',
+            title: labels[m],
             optimized: false
+        });
+        var infowindow = new google.maps.InfoWindow({
+            content: "hello world"
+        });
+        marker.addListener('click', function() {
+            infowindow.open(that.map, marker);
         });
     });
 
