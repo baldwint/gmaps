@@ -48,13 +48,21 @@ var PinmapView = widget.DOMWidgetView.extend({
       var data = that._getData() ;
       var bounds = that._getBounds() ;
 
-      console.log("hello world") ;
       that.map = new google.maps.Map(
         that.$el[0],
         { center : bounds.getCenter() }
       ) ;
 
     that.map.fitBounds(bounds) ;
+
+    data.forEach(function(latLng, m){
+        var marker = new google.maps.Marker({
+            position: latLng,
+            map: that.map,
+            title: '',
+            optimized: false
+        });
+    });
 
     google.maps.event.addListener(that.map, 'bounds_changed', function() {
           // Update the model when the bounds change in the view.
