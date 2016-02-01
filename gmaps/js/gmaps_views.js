@@ -27,10 +27,11 @@ var PlainmapView = widget.DOMWidgetView.extend({
 
     }
 
+    this.on("displayed", gmap_init) ;
     // IPython 2 compatibility hack. Replace with
     // this.on("displayed", gmap_init) when support for
     // IPython 2 is dropped.
-    setTimeout(gmap_init, 1) ;
+    //setTimeout(gmap_init, 1) ;
   }
 
 }) ;
@@ -188,7 +189,7 @@ var HeatmapView = widget.DOMWidgetView.extend({
 
       // Hack for IPython version 2.0
       // When support for IPython v2.0 is dropped, this should be replaced by
-      // this.on("displayed", gmap_init) ;
+      this.on("displayed", gmap_init) ;
       // See https://github.com/ipython/ipython/pull/5404 and
       // http://comments.gmane.org/gmane.comp.python.ipython.devel/12322
       // for reference.
@@ -196,7 +197,7 @@ var HeatmapView = widget.DOMWidgetView.extend({
       // attributes of the div containing it before they have actually been positioned in the DOM.
       // I think that the divs get created first (as a JQuery promise), then rendered asynchronously
       // by the notebook. It's all a little bewildering.
-      setTimeout(gmap_init, 1) ;
+      // setTimeout(gmap_init, 1) ;
     },
 
     update : function() {
