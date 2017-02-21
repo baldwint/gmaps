@@ -52,7 +52,9 @@ var PinmapView = widget.DOMWidgetView.extend({
 
       that.map = new google.maps.Map(
         that.$el[0],
-        { center : bounds.getCenter() }
+        { center : bounds.getCenter(),
+            mapTypeId: google.maps.MapTypeId.TERRAIN
+        }
       ) ;
 
     that.map.fitBounds(bounds) ;
